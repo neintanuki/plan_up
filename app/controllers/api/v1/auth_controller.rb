@@ -14,15 +14,16 @@ module Api
 
         # create user
         @user = User.create(
-          username: @body[:username],
-          password_digest: @body[:password]
+          username: @body["username"],
+          password_digest: @body["password"]
         )
         
         # validation
         if @user.save 
-          # send_auth_cookie(encode_token(@user.id))
+          send_auth_cookie(encode_token(@user.id))
+          render json: @register.success
         else
-        
+          render json: @register.fail(@user.errors)
         end
 
       end
@@ -39,21 +40,18 @@ module Api
         return JWT.encode(payload, secret_key, algorithm = 'HS256')
       end
 
-      def send_auth_cookie(token, path)
-        if path
-          path = '/'
-        end
+      def send_auth_cookie(token, path = "/")
 
-        # response.set_cookie(
-        #   :jwt_auth,
-        #   {
-        #     path: path,
-        #     expiry: 60 * 60 * 24 * 1000, # 3 days before expiration
-        #     value: token,
-        #     secure: true,
-        #     httponly: true
-        #   }
-        # )
+        response.set_cookie(
+          :jwt_auth,
+          {
+            path: path,
+            expiry: 60 * 60 * 24 * 1000, # 3 days before expiration
+            value: token,
+            secure: true,
+            httponly: true
+          }
+        )
         # set token
         # set expiry
       end

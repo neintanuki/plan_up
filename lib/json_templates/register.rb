@@ -9,6 +9,7 @@ module Register
         },
         message: "User successfully created"
       }
+
       return @success_template
     end
 
@@ -21,6 +22,8 @@ module Register
         message: "User not created",
         errors: errors
       }
+
+      return @fail_template
     end
   end
 end
