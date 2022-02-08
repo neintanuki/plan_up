@@ -11,3 +11,9 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+class ActionDispatch::IntegrationTest
+  def post_json(path, obj)
+    post path, params: obj.to_json, headers: { 'CONTENT_TYPE' => 'application/json' }
+  end
+end
