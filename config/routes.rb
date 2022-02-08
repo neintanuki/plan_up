@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   
   namespace :api do
     namespace :v1 do
-      get 'login', to: 'auth#login'
+      # user
+      post '/user/login', to: 'auth#login'
+      post '/user/register', to: 'auth#register'
     end
   end
-  
+
   get '*path', to: 'home#index'
 end
