@@ -15,7 +15,7 @@ module Api
         # create user
         @user = User.create(
           username: @body["username"],
-          password_digest: @body["password"]
+          password: @body["password"]
         )
         
         # validation
