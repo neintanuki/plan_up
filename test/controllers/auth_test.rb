@@ -25,7 +25,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "should send login error response" do
     # test request
     post_json '/api/v1/user/login', { username: 'test_name', password: "abc12345" }
-    assert_response 401
+    assert_response :unauthorized
   end
 
   # success register response
@@ -39,7 +39,7 @@ class AuthControllerTest < ActionDispatch::IntegrationTest
   test "should send register error response" do
     # test request
     post_json '/api/v1/user/register', { username: '', password: "" }
-    assert_response 401
+    assert_response :unauthorized
   end
 
 
