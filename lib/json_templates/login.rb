@@ -31,7 +31,6 @@ module Login
     end
 
     def fail
-      puts @errors
       @fail_template = {
         status: {
           code: 401,

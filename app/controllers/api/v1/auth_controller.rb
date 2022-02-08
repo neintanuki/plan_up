@@ -22,12 +22,12 @@ module Api
           else
             # password did not match
             @login.incorrect_password
-            render json: @login.fail
+            render json: @login.fail, status: :unauthorized
           end
         else
           # username not found
           @login.incorrect_username
-          render json: @login.fail
+          render json: @login.fail, status: :unauthorized
         end
 
       end
@@ -47,7 +47,7 @@ module Api
           send_auth_cookie(encode_token(@user.id))
           render json: @register.success
         else
-          render json: @register.fail(@user.errors)
+          render json: @register.fail(@user.errors), status: :unauthorized
         end
 
       end
