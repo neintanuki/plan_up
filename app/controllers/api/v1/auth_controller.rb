@@ -1,11 +1,35 @@
 require './lib/json_templates/register.rb'
+require './lib/json_templates/login.rb'
 
 module Api
   module V1
     class AuthController < ActionController::API
 
       def login
-        puts "I'm Loading...."
+        @body = JSON.parse(request.raw_post)
+        @login = Login.new
+
+        # find user
+        @user = User.find_by username: @body["username"]
+
+        # validation
+        if @user          
+          ency_pass = BCrypt::Password.new(@user[:password_digest])
+          
+          if ency_pass == @body["password"]
+            send_auth_cookie(encode_token(@user.id))
+            render json: @login.success    
+          else
+            # password did not match
+            @login.incorrect_password
+            render json: @login.fail
+          end
+        else
+          # username not found
+          @login.incorrect_username
+          render json: @login.fail
+        end
+
       end
 
       def register
@@ -19,7 +43,7 @@ module Api
         )
         
         # validation
-        if @user.save 
+        if @user.save
           send_auth_cookie(encode_token(@user.id))
           render json: @register.success
         else
@@ -30,6 +54,7 @@ module Api
 
       private
       include Register
+      include Login
 
       def secret_key
         return ENV["API_KEY"]
@@ -41,7 +66,6 @@ module Api
       end
 
       def send_auth_cookie(token, path = "/")
-
         response.set_cookie(
           :jwt_auth,
           {
@@ -52,8 +76,6 @@ module Api
             httponly: true
           }
         )
-        # set token
-        # set expiry
       end
 
     end

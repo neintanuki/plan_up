@@ -16,8 +16,8 @@ module Register
     def fail(errors)
       @fail_template = {
         status: {
-          code: 400,
-          message: "Bad Request"
+          code: 401,
+          message: "Unauthorized"
         },
         message: "User not created",
         errors: errors
