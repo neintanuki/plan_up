@@ -11,6 +11,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './pages/App'
 import Home from './pages/Home'
 import User from './pages/User'
+import Dashboard from './pages/Dashboard'
 
 // components
 import Login from './components/Login'
@@ -29,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
+
+        <Route path='/dashboard/:id' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>,
     document.body.appendChild(document.createElement('div')),
