@@ -57,7 +57,7 @@ module Api
       include Login
 
       def secret_key
-        return ENV["API_KEY"]
+        return ENV['API_SALT']
       end
 
       def encode_token(user_id)
