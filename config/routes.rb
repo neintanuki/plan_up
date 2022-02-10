@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       # user
       post '/user/login', to: 'auth#login'
       post '/user/register', to: 'auth#register'
+
+      #project
+      post '/create/project', to: 'project#create'
     end
   end
 
