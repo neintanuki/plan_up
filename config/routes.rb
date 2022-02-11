@@ -10,7 +10,11 @@ Rails.application.routes.draw do
       post '/user/register', to: 'auth#register'
 
       #project
+      get '/projects', to: 'project#new'
       post '/create/project', to: 'project#create'
+      patch '/update/project', to: 'project#update'
+      delete '/delete/project', to: 'project#delete'
+
     end
   end
 
