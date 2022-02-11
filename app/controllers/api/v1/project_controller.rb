@@ -1,6 +1,7 @@
 require './lib/json_templates/project_create.rb'
 require './lib/json_templates/project_update.rb'
 require './lib/json_templates/project_delete.rb'
+require './lib/json_templates/project_new.rb'
 
 module Api
   module V1
@@ -25,6 +26,13 @@ module Api
           @create.errors = @project.errors
           render json: @create.fail, status: :bad_request
         end
+      end
+
+      def new
+        @new = ProjectNew.new
+        @new.data = Project.all
+
+        render json: @new.success
       end
 
       def update
@@ -56,6 +64,7 @@ module Api
       include ProjectCreate
       include ProjectUpdate
       include ProjectDelete
+      include ProjectNew
 
       def secret_key
         return ENV['API_SALT']
