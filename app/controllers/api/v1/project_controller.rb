@@ -1,4 +1,6 @@
 require './lib/json_templates/project_create.rb'
+require './lib/json_templates/project_update.rb'
+require './lib/json_templates/project_delete.rb'
 
 module Api
   module V1
@@ -9,7 +11,7 @@ module Api
         @create = ProjectCreate.new
         @body = JSON.parse(request.raw_post)
         @title = @body["title"]
-        @description= @body["description"]
+        @description = @body["description"]
 
         @user = User.find(@id)
         @project = @user.projects.create(
@@ -18,20 +20,42 @@ module Api
         )
 
         if @project.save
-          puts "success"
-
           render json: @create.success
         else
-          puts "fail error"
           @create.errors = @project.errors
-          render json: @create.fail
+          render json: @create.fail, status: :bad_request
         end
+      end
 
+      def update
+        @body = JSON.parse(request.raw_post)
+        @update = ProjectUpdate.new
+
+        @project = Project.find(@body["id"])
+
+        if @project.update(title: @body["title"], description: @body["description"])
+          render json: @update.success
+        else
+          @update.errors = @project.errors
+          render json: @update.fail, status: :bad_request
+        end
+      end
+
+      def delete
+        @body = JSON.parse(request.raw_post)
+        @delete = ProjectDelete.new
+        @project = Project.find(@body["id"])
+
+        @project.delete
+
+        render json: @delete.success 
       end
 
 
       private
       include ProjectCreate
+      include ProjectUpdate
+      include ProjectDelete
 
       def secret_key
         return ENV['API_SALT']
