@@ -3,6 +3,43 @@ require "test_helper"
 class ProjectControllerTest < ActionDispatch::IntegrationTest
 
   test 'should send create response' do
+    create_user
+
+    dummy_data = {
+      title: "sample title",
+      description: "sample description"
+    }
+
+    post_json '/api/v1/create/project', dummy_data
+    assert_response :success
+
+  end
+
+  test 'should send create error response' do
+    create_user
+
+    dummy_data = {
+      title: "  invalid sample title",
+      description: "  invalid sample description"
+    }
+
+    post_json '/api/v1/create/project', dummy_data
+    assert_response :bad_request
+  end
+
+  test 'should send new response' do
+    create_user
+
+    get '/api/v1/project'
+
+    assert_response :success
+  end
+
+  # test "the truth" do
+  #   assert true
+  # end
+
+  def create_user
     # create user
     user = User.create(
       username: "test_username",
@@ -10,20 +47,11 @@ class ProjectControllerTest < ActionDispatch::IntegrationTest
     )
     user.save
 
-
-    dummy_data = {
-      title: "sample title",
-      description: "sample description"
-    }
-
-    # set cookie
-    cookies["jwt_auth"] = JWT.encode(user.id, ENV["API_SALT"])
-
-    post_json '/api/v1/create/project', dummy_data
-    assert_response :success
+    set_cookie(user.id)
 
   end
-  # test "the truth" do
-  #   assert true
-  # end
+
+  def set_cookie(id)
+    cookies["jwt_auth"] = JWT.encode(id, ENV["API_SALT"])
+  end
 end
