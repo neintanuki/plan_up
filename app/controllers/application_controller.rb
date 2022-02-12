@@ -20,7 +20,7 @@ class ApplicationController < ActionController::API
 	end
 
   def user_status
-    @id = decode_token.first["user_id"]
+    @id = decode_token.first
 
     unless @id
       render json: {

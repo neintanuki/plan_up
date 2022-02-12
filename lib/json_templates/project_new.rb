@@ -1,5 +1,5 @@
-module ProjectCreate
-  class ProjectCreate
+module ProjectNew
+  class ProjectNew
     attr_writer :data
 
     def initialize
