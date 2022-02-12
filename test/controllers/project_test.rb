@@ -3,7 +3,7 @@ require "test_helper"
 class ProjectControllerTest < ActionDispatch::IntegrationTest
 
   test 'should send create response' do
-    create_user
+    create_user.save
 
     dummy_data = {
       title: "sample title",
@@ -16,7 +16,7 @@ class ProjectControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should send create error response' do
-    create_user
+    create_user.save
 
     dummy_data = {
       title: "  invalid sample title",
@@ -28,10 +28,62 @@ class ProjectControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should send new response' do
-    create_user
+    create_user.save
 
     get '/api/v1/project'
 
+    assert_response :success
+  end
+
+  test 'should send edit response' do
+    user = create_user
+    project = user.projects.create(
+      title: "sample title",
+      description: "sample description"      
+    )
+    project.save
+
+    dummy_data = {
+      id: project.id,
+      title: "edited title",
+      description: "edited description"
+    }
+
+    patch '/api/v1/update/project', params: dummy_data.to_json
+    assert_response :success
+  end
+
+  test 'should send edit error response' do
+    user = create_user
+    project = user.projects.create(
+      title: "sample title",
+      description: "sample description"      
+    )
+    project.save
+
+    dummy_data = {
+      id: project.id,
+      title: "   edited title",
+      description: "   edited description"
+    }
+
+    patch '/api/v1/update/project', params: dummy_data.to_json
+    assert_response :bad_request
+  end
+
+  test 'delete user' do
+    user = create_user
+    project = user.projects.create(
+      title: "sample title",
+      description: "sample description"      
+    )
+    project.save
+
+    dummy_data = {
+      id: project.id
+    }
+
+    delete '/api/v1/delete/project', params: dummy_data.to_json
     assert_response :success
   end
 
@@ -45,10 +97,10 @@ class ProjectControllerTest < ActionDispatch::IntegrationTest
       username: "test_username",
       password: "passwordtest1234"
     )
-    user.save
 
     set_cookie(user.id)
 
+    return user
   end
 
   def set_cookie(id)
