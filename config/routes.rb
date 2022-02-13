@@ -15,6 +15,12 @@ Rails.application.routes.draw do
       patch '/update/project', to: 'project#update'
       delete '/destroy/project', to: 'project#destroy'
 
+      #category
+      get '', to: 'category#new'
+      post 'create/project', to: 'category#create'
+      patch '/update/project', to: 'category#update'
+      delete '/destroy/project', to: 'project#destroy'
+
     end
   end
 
