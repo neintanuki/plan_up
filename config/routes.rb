@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       get '/projects', to: 'project#new'
       post '/create/project', to: 'project#create'
       patch '/update/project', to: 'project#update'
-      delete '/delete/project', to: 'project#delete'
+      delete '/destroy/project', to: 'project#destroy'
 
     end
   end

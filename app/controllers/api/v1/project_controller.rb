@@ -1,6 +1,6 @@
 require './lib/json_templates/project_create.rb'
 require './lib/json_templates/project_update.rb'
-require './lib/json_templates/project_delete.rb'
+require './lib/json_templates/project_destroy.rb'
 require './lib/json_templates/project_new.rb'
 
 module Api
@@ -49,21 +49,21 @@ module Api
         end
       end
 
-      def delete
+      def destroy
         @body = JSON.parse(request.raw_post)
-        @delete = ProjectDelete.new
+        @destroy = ProjectDestroy.new
         @project = Project.find(@body["id"])
 
-        @project.delete
+        @project.destroy
 
-        render json: @delete.success 
+        render json: @destroy.success 
       end
 
 
       private
       include ProjectCreate
       include ProjectUpdate
-      include ProjectDelete
+      include ProjectDestroy
       include ProjectNew
 
       def secret_key

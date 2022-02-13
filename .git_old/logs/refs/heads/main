@@ -1,0 +1,31 @@
+0000000000000000000000000000000000000000 d11def7774bdddfadf39cfc9001ae045b067be7f nein-tanuki <romeroeleazar59@gmail.com> 1644205407 +0800	commit (initial): initial commit
+d11def7774bdddfadf39cfc9001ae045b067be7f 4026f7e2871d3cbfc6a46d7304dfe0c2961e6743 nein-tanuki <neintanuki@gmail.com> 1644241003 +0800	commit: changed default id type on models (from integer to uuid)
+4026f7e2871d3cbfc6a46d7304dfe0c2961e6743 a9aaa67682e6391d620c63e2c14be72ed933047e nein-tanuki <neintanuki@gmail.com> 1644243668 +0800	commit: created api/v1 directory on controllers folder
+a9aaa67682e6391d620c63e2c14be72ed933047e 7b9f0005104269d31ac997865c31cdcc0d6070cb nein-tanuki <neintanuki@gmail.com> 1644281901 +0800	commit: created json_templates directory on /lib
+7b9f0005104269d31ac997865c31cdcc0d6070cb bcc537c25cbb54cb893c66c6ca9be89a94d83b60 nein-tanuki <neintanuki@gmail.com> 1644283048 +0800	commit: implemented jwt authentication on /api/v1/user/register
+bcc537c25cbb54cb893c66c6ca9be89a94d83b60 89d16b2500a7233ac4c29ca46bef476f88a75bcf nein-tanuki <neintanuki@gmail.com> 1644290113 +0800	commit: added tests for model User
+89d16b2500a7233ac4c29ca46bef476f88a75bcf 2af2dc6700acb543d0428df9a8c2327a35810b65 nein-tanuki <neintanuki@gmail.com> 1644296907 +0800	commit: implemented bcrypt compare on /api/v1/user/login
+2af2dc6700acb543d0428df9a8c2327a35810b65 5e36ab452f69cfe994b3cdcc1edc50e48bdb149c nein-tanuki <neintanuki@gmail.com> 1644315323 +0800	commit: added tests for auth controller
+5e36ab452f69cfe994b3cdcc1edc50e48bdb149c 08ac9be58e65dbf9dd9f522a1ea7260a7c8bf4ac nein-tanuki <neintanuki@gmail.com> 1644315514 +0800	commit: updated auth controller test to expect :unauthorized (symbol) instead of 401 (http code)
+08ac9be58e65dbf9dd9f522a1ea7260a7c8bf4ac fcd0dad41fe6fb3495f9f82203840fdcaaf22b83 nein-tanuki <neintanuki@gmail.com> 1644315841 +0800	commit: fixed auth controller rendering incorrect status code
+fcd0dad41fe6fb3495f9f82203840fdcaaf22b83 fcd0dad41fe6fb3495f9f82203840fdcaaf22b83 nein-tanuki <neintanuki@gmail.com> 1644318469 +0800	Branch: renamed refs/heads/master to refs/heads/main
+fcd0dad41fe6fb3495f9f82203840fdcaaf22b83 a8c3bfc24b3419a87b59f06bd9e0fc6bb18e976e nein-tanuki <neintanuki@gmail.com> 1644413370 +0800	commit: initialized views for login and register
+a8c3bfc24b3419a87b59f06bd9e0fc6bb18e976e fbb411897d875c008ea95ef8044c056b482e3e31 nein-tanuki <neintanuki@gmail.com> 1644417006 +0800	commit: initialized dashboard page template
+fbb411897d875c008ea95ef8044c056b482e3e31 22a275623bb3214242966cf8a55713ab9e1eb41b nein-tanuki <neintanuki@gmail.com> 1644417351 +0800	commit: updated readme
+22a275623bb3214242966cf8a55713ab9e1eb41b 07933f9cd006ba050f49ae1242edd2234cac821d nein-tanuki <neintanuki@gmail.com> 1644470984 +0800	commit: added projects model
+07933f9cd006ba050f49ae1242edd2234cac821d 659e4b1dfd513909d680444bd4cafae0122138c1 nein-tanuki <neintanuki@gmail.com> 1644471975 +0800	commit: added validation to project model
+659e4b1dfd513909d680444bd4cafae0122138c1 61e86de87e8821609d15daa55e85853ffd454dd0 nein-tanuki <neintanuki@gmail.com> 1644475446 +0800	commit: added project_controller.rb on controllers directory
+61e86de87e8821609d15daa55e85853ffd454dd0 81b7daefb7cd064f8cf969b1cd88e8a06e371b20 nein-tanuki <neintanuki@gmail.com> 1644475626 +0800	commit: added .env to .gitignore
+81b7daefb7cd064f8cf969b1cd88e8a06e371b20 32e064d429a974596dc13a2bdaf8c6a199e00577 nein-tanuki <neintanuki@gmail.com> 1644475975 +0800	commit: renamed env
+32e064d429a974596dc13a2bdaf8c6a199e00577 52ece413645ba077c2beb59c2a132889b8ec50ee nein-tanuki <neintanuki@gmail.com> 1644480509 +0800	commit: untracked env
+52ece413645ba077c2beb59c2a132889b8ec50ee 733ad5603acb09ca036a7681071bfdcc3cd4bc47 nein-tanuki <neintanuki@gmail.com> 1644480956 +0800	commit: removed env file of jwt
+733ad5603acb09ca036a7681071bfdcc3cd4bc47 ceecd757e2bbaf039c19d5df75facbc5735522ac nein-tanuki <neintanuki@gmail.com> 1644483139 +0800	commit: fixed bug where .env cannot be accessed
+ceecd757e2bbaf039c19d5df75facbc5735522ac c4e8ff157da9ab84c83f1a2bb043e93bc1825e6f nein-tanuki <neintanuki@gmail.com> 1644568393 +0800	commit: implemented create project feature
+c4e8ff157da9ab84c83f1a2bb043e93bc1825e6f 7747aae1f78976e3832dd8d93795087ace5e57ad nein-tanuki <neintanuki@gmail.com> 1644590495 +0800	commit: implemented delete project feature
+7747aae1f78976e3832dd8d93795087ace5e57ad 6598edcf9cf4014d495178c1d233fa7a01a93feb nein-tanuki <neintanuki@gmail.com> 1644590989 +0800	commit: implemented read/new project feature
+6598edcf9cf4014d495178c1d233fa7a01a93feb db29a69f463b627041c371e9ee5ff786c9e473eb nein-tanuki <neintanuki@gmail.com> 1644628688 +0800	commit: added tests for model Project
+db29a69f463b627041c371e9ee5ff786c9e473eb 2e0866dd39eb2f2e954ff18aca2a500110a90416 nein-tanuki <neintanuki@gmail.com> 1644634675 +0800	commit: fixed bug in application_controller where @id is not parsed properly
+2e0866dd39eb2f2e954ff18aca2a500110a90416 72044cd25237aa926045a37b2423778022509dc2 nein-tanuki <neintanuki@gmail.com> 1644636026 +0800	commit: defined custom testing functions on controllers/project_test.rb
+72044cd25237aa926045a37b2423778022509dc2 31be101acef6590429b635bdd63a8da894996354 nein-tanuki <neintanuki@gmail.com> 1644638366 +0800	commit: added tests for controller Project
+31be101acef6590429b635bdd63a8da894996354 7b102a6830105a8e634a91cf045b24eb03a22ac0 nein-tanuki <neintanuki@gmail.com> 1644677398 +0800	commit: changed delete method to destroy since it's not supported in rails 6
+7b102a6830105a8e634a91cf045b24eb03a22ac0 583dad98d861afa9c60d758d6b800edd674fafb4 nein-tanuki <neintanuki@gmail.com> 1644678848 +0800	commit: added tests for model category
