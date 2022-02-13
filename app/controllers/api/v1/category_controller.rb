@@ -40,7 +40,14 @@ module Api
       end
 
       def new
-        @categories = Category.all
+        @project_id = params["project_id"]
+        @new = CategoryNew.new
+
+        @categories = Category.where(project_id: @project_id)
+
+        @new.data = @categories
+
+        render json: @new.success
       end
 
       private
