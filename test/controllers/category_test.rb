@@ -4,19 +4,26 @@ class CategoryControllerTest < ActionDispatch::IntegrationTest
 
   # create 
   test "should send create response" do
-    create_user_with_project
+    project_id = create_user_with_project
 
     dummy_data = {
+      project_id: project_id,
       title: "Sample Title"
     }
 
     post_json '/api/v1/create/category', dummy_data
     assert_response :success
-
   end
 
   test "should send create error response" do
+    project_id = create_user_with_project
 
+    dummy_data = {
+      title: "sample title"
+    }
+
+    post_json '/api/v1/create/category', dummy_data
+    assert_response :bad_request
   end
 
   # new
@@ -51,7 +58,7 @@ class CategoryControllerTest < ActionDispatch::IntegrationTest
     )
 
     set_cookie user.id
-    create_project user
+    return create_project user
   end
 
   def create_project user
@@ -60,6 +67,7 @@ class CategoryControllerTest < ActionDispatch::IntegrationTest
     )
 
     project.save
+    return project.id
   end
 
   def set_cookie id
