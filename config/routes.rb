@@ -16,10 +16,10 @@ Rails.application.routes.draw do
       delete '/destroy/project', to: 'project#destroy'
 
       #category
-      get '', to: 'category#new'
-      post 'create/project', to: 'category#create'
-      patch '/update/project', to: 'category#update'
-      delete '/destroy/project', to: 'project#destroy'
+      get '/categories', to: 'category#new'
+      post 'create/category', to: 'category#create'
+      patch '/update/category', to: 'category#update'
+      delete '/destroy/category', to: 'category#destroy'
 
     end
   end
