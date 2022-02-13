@@ -1,4 +1,5 @@
 require './lib/json_templates/category_create.rb'
+require './lib/json_templates/category_new.rb'
 
 module Api
   module V1
@@ -38,8 +39,13 @@ module Api
 
       end
 
+      def new
+        @categories = Category.all
+      end
+
       private
       include CategoryCreate
+      include CategoryNew
 
 
 

@@ -28,7 +28,7 @@ class CategoryControllerTest < ActionDispatch::IntegrationTest
 
   # new
   test "should send new response" do
-
+    
   end
 
   test "should send new error response" do

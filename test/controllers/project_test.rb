@@ -28,9 +28,14 @@ class ProjectControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should send new response' do
-    create_user.save
+    user = create_user
+    project = user.projects.create(
+      title: "sample title",
+      description: "sample description"      
+    )
+    project.save
 
-    get '/api/v1/project'
+    get '/api/v1/projects'
 
     assert_response :success
   end
@@ -83,7 +88,7 @@ class ProjectControllerTest < ActionDispatch::IntegrationTest
       id: project.id
     }
 
-    delete '/api/v1/delete/project', params: dummy_data.to_json
+    delete '/api/v1/destroy/project', params: dummy_data.to_json
     assert_response :success
   end
 

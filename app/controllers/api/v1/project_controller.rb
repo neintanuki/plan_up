@@ -30,7 +30,7 @@ module Api
 
       def new
         @new = ProjectNew.new
-        @new.data = Project.all
+        @new.data = Project.where(user_id: @id)
 
         render json: @new.success
       end
