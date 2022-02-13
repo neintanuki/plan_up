@@ -31,17 +31,35 @@ class CategoryControllerTest < ActionDispatch::IntegrationTest
     project = create_user_with_project
     create_category project
 
-    get "/api/v1/categories/#{{project.id}}"
+    get "/api/v1/categories/#{project.id}"
     assert_response :success
   end
 
   # edit
   test "should send edit response" do
+    project = create_user_with_project
+    category = create_category(project)
 
+    dummy_data = {
+      category_id: category.id,
+      title: "Edited title"
+    }
+
+    patch "/api/v1/update/category", params: dummy_data.to_json
+    assert_response :success
   end
 
   test "should send edit error response" do
+    project = create_user_with_project
+    category = create_category(project)
 
+    dummy_data = {
+      category_id: category.id,
+      title: "   Invalid Edited title"
+    }
+
+    patch "/api/v1/update/category", params: dummy_data.to_json
+    assert_response :bad_request
   end
 
   # delete
@@ -78,6 +96,8 @@ class CategoryControllerTest < ActionDispatch::IntegrationTest
       )
 
       category.save
+
+      return category
     else
       category = project.categories.create(
         title: "Sample Category" # no project_id

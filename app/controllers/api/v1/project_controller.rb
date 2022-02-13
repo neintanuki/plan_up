@@ -39,7 +39,7 @@ module Api
         @body = JSON.parse(request.raw_post)
         @update = ProjectUpdate.new
 
-        @project = Project.find(@body["id"])
+        @project = Project.find_by(id: @body["id"], user_id: @id)
 
         if @project.update(title: @body["title"], description: @body["description"])
           render json: @update.success
@@ -52,7 +52,7 @@ module Api
       def destroy
         @body = JSON.parse(request.raw_post)
         @destroy = ProjectDestroy.new
-        @project = Project.find(@body["id"])
+        @project = Project.find_by(id: @body["id"], user_id: @id)
 
         @project.destroy
 

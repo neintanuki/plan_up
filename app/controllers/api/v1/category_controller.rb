@@ -1,5 +1,6 @@
 require './lib/json_templates/category_create.rb'
 require './lib/json_templates/category_new.rb'
+require './lib/json_templates/category_update.rb'
 
 module Api
   module V1
@@ -42,17 +43,35 @@ module Api
       def new
         @project_id = params["project_id"]
         @new = CategoryNew.new
-
         @categories = Category.where(project_id: @project_id)
-
         @new.data = @categories
 
         render json: @new.success
       end
 
+      def update
+        @body = JSON.parse(request.raw_post)
+        @update = CategoryUpdate.new
+        @user = User.find(@id)
+
+        @category = @user.categories.find(@body["category_id"])
+
+        if @category.update(title: @body["title"])
+          render json: @update.success
+        else
+          @update.errors = @category.errors
+          render json: @update.fail, status: :bad_request
+        end
+      end
+
+      def destroy
+
+      end
+
       private
       include CategoryCreate
       include CategoryNew
+      include CategoryUpdate
 
 
 
