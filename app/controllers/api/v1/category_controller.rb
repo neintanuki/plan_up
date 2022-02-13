@@ -1,6 +1,7 @@
 require './lib/json_templates/category_create.rb'
 require './lib/json_templates/category_new.rb'
 require './lib/json_templates/category_update.rb'
+require './lib/json_templates/category_destroy.rb'
 
 module Api
   module V1
@@ -65,15 +66,21 @@ module Api
       end
 
       def destroy
+        @body = JSON.parse(request.raw_post)
+        @destroy = CategoryDestroy.new
+        @user = User.find(@id)
+        @category = @user.categories.find(@body["category_id"])
 
+        @category.destroy
+
+        render json: @destroy.success 
       end
 
       private
       include CategoryCreate
       include CategoryNew
       include CategoryUpdate
-
-
+      include CategoryDestroy
 
     end
   end

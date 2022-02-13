@@ -64,7 +64,15 @@ class CategoryControllerTest < ActionDispatch::IntegrationTest
 
   # delete
   test "shoulde send delete response" do
+    project = create_user_with_project
+    category = create_category(project)
 
+    dummy_data = {
+      category_id: category.id
+    }
+
+    delete "/api/v1/destroy/category", params: dummy_data.to_json
+    assert_response :success
   end
 
   private
