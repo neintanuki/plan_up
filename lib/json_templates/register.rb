@@ -1,5 +1,10 @@
 module Register
   class Register
+    attr_writer :errors
+
+    def initialize
+      @errors
+    end
 
     def success
       @success_template = {
@@ -13,14 +18,14 @@ module Register
       return @success_template
     end
 
-    def fail(errors)
+    def fail
       @fail_template = {
         status: {
           code: 401,
           message: "Unauthorized"
         },
         message: "User not created",
-        errors: errors
+        errors: @errors
       }
 
       return @fail_template

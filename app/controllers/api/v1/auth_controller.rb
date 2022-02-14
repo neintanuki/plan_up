@@ -36,19 +36,32 @@ module Api
         @register = Register.new
         @body = JSON.parse(request.raw_post)
 
-        # create user
-        @user = User.create(
-          username: @body["username"],
-          password: @body["password"]
-        )
-        
-        # validation
-        if @user.save
-          send_auth_cookie(encode_token(@user.id))
-          render json: @register.success
+        if @body["password"] == @body["confirm_password"]
+          # create user
+          @user = User.create(
+            username: @body["username"],
+            password: @body["password"]
+          )
+          
+          # validation
+          if @user.save
+            send_auth_cookie(encode_token(@user.id))
+            render json: @register.success
+          else
+            @register.errors = @user.errors
+            render json: @register.fail, status: :unauthorized
+          end
         else
-          render json: @register.fail(@user.errors), status: :unauthorized
+          @register.errors = {
+            confirm_password: ["does not match"],
+            full_messages: ["Confirm Password does not match"]
+          }
+
+          render json: @register.fail, status: :unauthorized
+
         end
+
+
 
       end
 
@@ -72,7 +85,6 @@ module Api
             path: path,
             expiry: 60 * 60 * 24 * 1000, # 3 days before expiration
             value: token,
-            secure: true,
             httponly: true
           }
         )
