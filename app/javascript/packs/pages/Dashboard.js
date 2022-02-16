@@ -1,10 +1,15 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 // components
 import Nav from '../components/Nav.jsx'
 import Sidebar from '../components/Sidebar.jsx'
 
 export default function Dashboard() {
+  useEffect(() => {
+    
+  }, [])
+
+
 	return (
 		<section className="dashboard">
       <Nav />
