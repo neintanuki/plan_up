@@ -27,19 +27,20 @@ export default function Projects() {
 
   function createProject() {
     create_project(project).then(res => {
-      handleClose
+      handleClose()
     })
   }
 
   function editProject() {
     edit_project(project).then(res => {
-      handleClose
+      console.log(res)
+      handleClose()
     })
   }
 
-  function handleEdit(project_id, title, description) {
+  function handleEdit(id, title, description) {
     setProject(() => {
-      return { project_id, title, description }
+      return { id, title, description }
     })
 
     handleShow(true)
