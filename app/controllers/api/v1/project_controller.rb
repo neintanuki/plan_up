@@ -8,7 +8,6 @@ module Api
     class ProjectController < ApplicationController
 
       def create
-        # @id
         @create = ProjectCreate.new
         @body = JSON.parse(request.raw_post)
         @title = @body["title"]

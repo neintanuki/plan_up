@@ -14,8 +14,8 @@ import User from './pages/User'
 import Dashboard from './pages/Dashboard'
 
 // components
-import Login from './components/Login'
-import Register from './components/Register'
+import Login from './components/Login.jsx'
+import Register from './components/Register.jsx'
 
 
 document.addEventListener('DOMContentLoaded', () => {
