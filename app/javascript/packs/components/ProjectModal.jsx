@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Modal, Button } from 'react-bootstrap'
 
-export default function ProjectModal({ show, handleClose, setProject, createProject }) {
+export default function ProjectModal({ show, handleClose, project, setProject, handleSubmit, onEdit }) {
   function handleTitle(e) {
     setProject(state => {
       return {
@@ -30,25 +30,21 @@ export default function ProjectModal({ show, handleClose, setProject, createProj
     handleClose()
   }
 
-  function handleSubmit() {
-    createProject()
-  }
-
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Create Project</Modal.Title>
+        <Modal.Title>{ onEdit ? "Edit" : "Create"} Project</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <div className="mb-4">
           <label className="form-label">Title</label>
-          <input type="text" className="form-control" placeholder="Required" onChange={handleTitle} />
+          <input type="text" className="form-control" placeholder="Required" onChange={handleTitle} value={project.title}/>
         </div>
 
         <div className="mb-4">
           <label className="form-label">Description</label>
-          <input type="text" className="form-control" placeholder="Optional" onChange={handleDescription} />
+          <input type="text" className="form-control" placeholder="Optional" onChange={handleDescription} value={project.description}/>
         </div>
 
       </Modal.Body>
@@ -57,7 +53,7 @@ export default function ProjectModal({ show, handleClose, setProject, createProj
           Cancel
         </Button>
         <Button variant="primary" onClick={handleSubmit}>
-          Create Project
+          { onEdit ? "Edit" : "Create"} Project
         </Button>
       </Modal.Footer>
     </Modal>
