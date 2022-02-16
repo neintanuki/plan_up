@@ -1,9 +1,11 @@
 import React from "react"
 
+import Projects from "./Projects.jsx"
+
 export default function Sidebar() {
   return (
-	  <div className="sidebar bg-red-600 w-3/12 h-full p-6 d-fixed top-0 left-0">
-      sidebar
+	  <div className="sidebar col-md-3 h-100 bg-primary px-4">
+      <Projects />
     </div>
 	)
 }

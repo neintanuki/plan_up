@@ -6,15 +6,15 @@ import Sidebar from '../components/Sidebar.jsx'
 
 export default function Dashboard() {
   useEffect(() => {
-    
+
   }, [])
 
 
 	return (
-		<section className="dashboard">
+		<section className="dashboard vh-100 bg-info">
       <Nav />
 
-      <div className="body flex relative h-body">
+      <div className="body flex h-100 bg-danger">
         <Sidebar />
       </div>
     </section>

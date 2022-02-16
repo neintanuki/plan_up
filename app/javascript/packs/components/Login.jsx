@@ -19,34 +19,34 @@ export default function Login() {
   }
 
   return (
-    <form className="login p-4 w-10/12" onSubmit={e => login_user(e, auth)}>
+    <form className="login container" onSubmit={e => login_user(e, auth)}>
       <div className="header mb-4">
-        <h1 className='text-4xl font-semibold my-1 text-primary'>Login</h1>
+        <h1 className='my-1 text-primary'>Login</h1>
         <p>Adventure awaits</p>
       </div>
 
       <div className='mb-4'>
-        <label className='block'>Username</label>
+        <label className='form-label'>Username</label>
         <input
         type="text"
-        className="border-2 border-primary/60 p-2 w-full block rounded"
+        className="form-control"
         onChange={e => change_auth("username", e)}
         value={auth.username}
         />
       </div>
 
       <div className="mb-4">
-        <label className="block">Password</label>
+        <label className="form-label">Password</label>
         <input
         type="password"
-        className="border-2 border-primary/60 p-2 w-full block rounded"
+        className="form-control"
         onChange={e => change_auth("password", e)}
         value={auth.password}
         />
       </div>
 
       <div className="footer">
-        <button type="submit" className="bg-primary text-white p-4 w-full rounded">Log In</button>
+        <button type="submit" className="btn btn-primary d-block w-100">Log In</button>
       </div>
     </form>
   )
