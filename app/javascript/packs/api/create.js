@@ -8,3 +8,10 @@ export async function create_project(payload) {
 
   return res
 }
+
+// category
+export async function create_category(payload) {
+  const res = await axios.post(`${API_URL}/create/category`, payload)
+
+  return res
+}

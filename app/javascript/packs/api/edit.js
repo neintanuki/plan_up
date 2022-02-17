@@ -8,3 +8,10 @@ export async function edit_project(payload) {
 
   return res
 }
+
+// category
+export async function edit_category(payload) {
+  const res = await axios.patch(`${API_URL}/update/category`, payload)
+
+  return res
+}

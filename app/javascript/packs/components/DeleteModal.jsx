@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Modal, Button } from 'react-bootstrap'
 
-export default function DeleteModal({ show, handleClose, handleSubmit }) {
+export default function DeleteModal({ show, handleClose, handleSubmit, variant }) {
 
   function deleteProject() {
     handleSubmit()
@@ -12,7 +12,7 @@ export default function DeleteModal({ show, handleClose, handleSubmit }) {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete Project</Modal.Title>
+        <Modal.Title>Delete { variant }</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -23,7 +23,7 @@ export default function DeleteModal({ show, handleClose, handleSubmit }) {
           Cancel
         </Button>
         <Button variant="danger" onClick={deleteProject}>
-          Delete Project
+          Delete { variant }
         </Button>
       </Modal.Footer>
     </Modal>

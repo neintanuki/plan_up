@@ -8,11 +8,16 @@ export const ListContext = createContext()
 
 export default function Dashboard() {
   const [list, setList] = useState({
-    projects: []
+    projects: [],
+    categories: []
+  })
+
+  const [selectedId, setSelectedId] = useState({
+    project: ""
   })
 
 	return (
-    <ListContext.Provider value={{list, setList}}>
+    <ListContext.Provider value={{list, setList, selectedId, setSelectedId}}>
   		<section className="dashboard vh-100 bg-info">
         <Nav />
 

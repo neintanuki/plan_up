@@ -7,3 +7,10 @@ export async function get_projects() {
 
   return res
 }
+
+
+export async function get_categories(project_id) {
+  const res = await axios.get(`${API_URL}/categories/${project_id}`)
+
+  return res
+}

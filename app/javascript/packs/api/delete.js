@@ -8,3 +8,10 @@ export async function delete_project(payload) {
 
   return res
 }
+
+// category
+export async function delete_category(payload) {
+  const res = await axios.delete(`${API_URL}/destroy/category`, { data: payload })
+
+  return res
+}
