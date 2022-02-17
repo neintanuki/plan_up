@@ -1,24 +1,30 @@
 import React, { useEffect, useState, useContext } from 'react'
 
 import ProjectModal from './ProjectModal.jsx'
+import DeleteModal from './DeleteModal.jsx'
 
 import { get_projects } from '../api/read'
 import { create_project } from '../api/create'
 import { edit_project } from '../api/edit'
+import { delete_project } from '../api/delete'
 
 import { ListContext } from '../pages/Dashboard'
 
 export default function Projects() {
   const [project, setProject] = useState({
     title: "",
-    description: ""
+    description: "",
+    id: ""
   })
   const [edit, setEdit] = useState(false)
-
-  const { list, setList } = useContext(ListContext)
+  const [deleteModal, setDeleteModal] = useState(false)
+  const closeDeleteModal = () => setDeleteModal(false)
+  const showDeleteModal = () => setDeleteModal(true)
 
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => setShowModal(false)
+
+  const { list, setList } = useContext(ListContext)
 
   function handleShow(isEdit) {
     setEdit(isEdit)
@@ -36,6 +42,22 @@ export default function Projects() {
       console.log(res)
       handleClose()
     })
+  }
+
+  function deleteProject() {
+    delete_project({ id: project.id }).then(res => {
+      console.log(res)
+    })
+  }
+
+  function handleDelete(id) {
+    setProject(state => {
+      return {
+        ...state,
+        id
+      }
+    })
+    showDeleteModal()
   }
 
   function handleEdit(id, title, description) {
@@ -90,7 +112,7 @@ export default function Projects() {
                   <button
                   className="btn-btn-success"
                   onClick={() => handleEdit(project.id, project.title, project.description)}>edit</button>
-                  <button className="btn btn-success">-</button>
+                  <button className="btn btn-success" onClick={() => handleDelete(project.id)}>-</button>
                 </div>
               </div>
             )
@@ -99,6 +121,8 @@ export default function Projects() {
       </div>
       
       <ProjectModal show={showModal} handleClose={handleClose} project={project} setProject={setProject} handleSubmit={handleSubmit} onEdit={edit} />
+
+      <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={deleteProject} />
 
     </div>
   )
