@@ -22,8 +22,8 @@ Rails.application.routes.draw do
       delete '/destroy/category', to: 'category#destroy'
 
       #task
-      get '/tasks/:task_id', to: 'task#new'
-      post 'create/task', to: 'task#create'
+      get '/tasks/:category_id', to: 'task#new'
+      post '/create/task', to: 'task#create'
       patch '/update/task', to: 'task#update'
       delete '/destroy/task', to: 'task#destroy'
 
