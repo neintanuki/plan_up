@@ -16,9 +16,7 @@ module Api
         @due_date = DateTime.new(
           @body["due_date"]["year"],
           @body["due_date"]["month"],
-          @body["due_date"]["day"],
-          @body["due_date"]["hour"],
-          @body["due_date"]["minute"],          
+          @body["due_date"]["day"]         
         )
 
 
@@ -33,7 +31,7 @@ module Api
           render json: @create.success
         else
           @create.errors = @task.errors
-          render json: @create.fail
+          render json: @create.fail, status: :bad_request
         end
 
       end
@@ -60,9 +58,7 @@ module Api
         @due_date = DateTime.new(
           @body["due_date"]["year"],
           @body["due_date"]["month"],
-          @body["due_date"]["day"],
-          @body["due_date"]["hour"],
-          @body["due_date"]["minute"],          
+          @body["due_date"]["day"]         
         )
 
         @task = @category.tasks.find(@body["id"])
@@ -76,7 +72,7 @@ module Api
           render json: @update.success
         else
           @update.errors = @task.errors
-          render json: @update.fail
+          render json: @update.fail, status: :bad_request
         end
       end
 

@@ -14,3 +14,9 @@ export async function get_categories(project_id) {
 
   return res
 }
+
+export async function get_tasks(project_id, category_id) {
+  const res = await axios.get(`${API_URL}/tasks/${project_id}/${category_id}`)
+
+  return res
+}

@@ -58,7 +58,7 @@ export default function Register() {
       </div>
 
       <div className="footer">
-        <button type="submit" className="btn btn-primary p-3 w-100">Log In</button>
+        <button type="submit" className="btn btn-primary p-3 w-100">Register</button>
       </div>
     </form>
   )

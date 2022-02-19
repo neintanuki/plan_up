@@ -15,3 +15,10 @@ export async function delete_category(payload) {
 
   return res
 }
+
+// task
+export async function delete_task(payload) {
+  const res = await axios.delete(`${API_URL}/destroy/task`, { data: payload })
+
+  return res
+}

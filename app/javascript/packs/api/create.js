@@ -15,3 +15,10 @@ export async function create_category(payload) {
 
   return res
 }
+
+// tasks
+export async function create_task(payload) {
+  const res = await axios.post(`${API_URL}/create/task`, payload)
+
+  return res
+}

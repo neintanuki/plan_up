@@ -1,3 +1,7 @@
 .dashboard .body > div {
   padding-top: 54px;
 }
+
+.category.card {
+  width: 30%;
+}

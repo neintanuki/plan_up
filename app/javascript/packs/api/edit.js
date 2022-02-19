@@ -15,3 +15,10 @@ export async function edit_category(payload) {
 
   return res
 }
+
+// task
+export async function edit_task(payload) {
+  const res = await axios.patch(`${API_URL}/update/task`, payload)
+
+  return res
+}

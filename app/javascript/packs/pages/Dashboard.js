@@ -3,6 +3,7 @@ import React, { useEffect, useState, createContext } from "react"
 // components
 import Nav from '../components/Nav.jsx'
 import Sidebar from '../components/Sidebar.jsx'
+import Tasks from '../components/Tasks.jsx'
 
 export const ListContext = createContext()
 
@@ -21,8 +22,10 @@ export default function Dashboard() {
   		<section className="dashboard vh-100 bg-info">
         <Nav />
 
-        <div className="body flex h-100 bg-danger">
+        <div className="body d-flex h-100 bg-danger">
           <Sidebar />
+          <Tasks />
+
         </div>
       </section>
     </ListContext.Provider>

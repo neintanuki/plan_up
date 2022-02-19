@@ -12,11 +12,11 @@ export default function DeleteModal({ show, handleClose, handleSubmit, variant }
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete { variant }</Modal.Title>
+        <Modal.Title>Delete { variant[0].toUpperCase() }</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <p>Are you sure do you want to delete this project?</p>
+        <p>Are you sure do you want to delete this { variant }?</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
