@@ -1,7 +1,20 @@
 .dashboard .body > div {
-  padding-top: 54px;
+  padding-top: 58px;
 }
 
 .category.card {
   width: 30%;
+}
+
+.line-bottom {
+  border-bottom: solid 2px #eeeeee;
+}
+
+.icon {
+  background: none;
+  border: none;
+}
+
+.task-due {
+  background: #eeeeee;
 }

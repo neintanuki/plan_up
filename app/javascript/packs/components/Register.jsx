@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { register_user } from '../api/auth'
+import Errors from './Errors.jsx'
 
 export default function Register() {
 
@@ -8,6 +9,11 @@ export default function Register() {
     username: "",
     password: "",
     confirm_password: ""
+  })
+  const [errors, setErrors] = useState({
+    username: [],
+    password: [],
+    confirm_password: []    
   })
 
   function change_auth(property, event) {
@@ -19,12 +25,33 @@ export default function Register() {
     })
   }
 
+  function register(e) {
+    register_user(e, auth).then(res => {
+      console.log(res)
+      alert("Account Created")
+      window.location.href = "/user/login"
+    }).catch(err => {
+      const { errors } = err.response.data
+      let errorTemplate = {
+        username: [],
+        password: [],
+        confirm_password: []
+      }
+      errorTemplate = {
+        ...errorTemplate,
+        ...errors
+      }
+
+      setErrors(errorTemplate)
+    })
+  }
+
 
   return (
-    <form className="register container" onSubmit={e => register_user(e, auth)}>
+    <form className="register container" onSubmit={register}>
       <div className="header mb-4">
         <h1 className='my-1 text-primary'>Register</h1>
-        <p>This is a valid description</p>
+        <p>Register for free</p>
       </div>
 
       <div className='mb-4'>
@@ -35,6 +62,7 @@ export default function Register() {
         onChange={e => change_auth("username", e)}
         value={auth.username}
         />
+        <Errors errors={errors.username} />
       </div>
 
       <div className="mb-4">
@@ -45,6 +73,7 @@ export default function Register() {
         onChange={e => change_auth("password", e)}
         value={auth.password}
         />
+        <Errors errors={errors.password} />
       </div>
 
       <div className="mb-4">
@@ -55,6 +84,7 @@ export default function Register() {
         onChange={e => change_auth("confirm_password", e)}
         value={auth.confirm_password}
         />
+        <Errors errors={errors.confirm_password} />
       </div>
 
       <div className="footer">

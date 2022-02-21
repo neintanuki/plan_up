@@ -7,7 +7,7 @@ export default function Nav() {
   const { list } = useContext(ListContext)
 
   return (
-    <header className="navbar container-fluid bg-primary px-4 py-2 position-fixed top-0 left-0">
+    <header className="navbar container-fluid bg-light px-4 py-2 position-fixed top-0 left-0 shadow">
       <div className="container-fluid d-flex justify-content-between">
         <div className="navbar-brand">
           <span>Plan Up</span>

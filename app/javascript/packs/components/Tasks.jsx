@@ -2,16 +2,17 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { ListContext } from '../pages/Dashboard'
 
-import { get_tasks } from '../api/read'
+import { get_tasks, get_categories } from '../api/read'
 import { create_task } from '../api/create'
 import { edit_task } from '../api/edit'
 import { delete_task } from '../api/delete'
 
 import TaskModal from './TaskModal.jsx'
 import DeleteModal from './DeleteModal.jsx'
+import TaskDue from './TaskDue.jsx'
 
 export default function Tasks() {
-  const { selectedId, list } = useContext(ListContext)
+  const { selectedId, list, setList } = useContext(ListContext)
 
   const [task, setTask] = useState({
     id: "",
@@ -59,6 +60,17 @@ export default function Tasks() {
 
     create_task(payload).then(res => {
       handleClose()
+      console.log(res)
+      get_categories(selectedId.project).then(res => {
+        const { data } = res.data
+        console.log(res)
+        setList(state => {
+          return {
+            ...state,
+            categories: data
+          }
+        })
+      })
     })
   }
 
@@ -80,6 +92,7 @@ export default function Tasks() {
 
     edit_task(payload).then(res => {
       handleClose()
+      getTasks()
     })
   }
 
@@ -116,38 +129,43 @@ export default function Tasks() {
     delete_task(payload).then(res => {
       console.log(res)
       handleClose()
+      getTasks()
+    })
+  }
+
+  function getTasks() {
+    const selectedProject = selectedId.project
+    const categories = list.categories
+    let newTasks = []
+
+    categories.forEach(({ id }) => {
+      get_tasks(selectedProject, id).then(res => {
+        const category = res.data
+
+        newTasks = [
+          ...newTasks,
+          {
+            id,
+            category
+          }
+        ]
+
+        if (categories.length === newTasks.length) {
+          setTasks(newTasks)
+        }
+
+
+      })
     })
   }
 
   useEffect(() => {
-    const selectedProject = selectedId.project
-    const categories = list.categories
-
-    if (selectedProject.length > 0) {
-      if (categories.length > 0) {
-        categories.forEach(({ id }) => {
-          get_tasks(selectedProject, id).then(res => {
-            const category = res.data
-
-            setTasks(state => {
-              return [
-                ...state,
-                {
-                  ...category,
-                  id
-                }
-              ]              
-
-            })
-          })
-        })
-      }
-    }
-  }, [selectedId, list.categories])
+    getTasks()
+  }, [selectedId.project, list.categories])
 
   return (
-    <div className="tasks col-md-9 h-100 bg-info">
-      <div className="d-flex flex-wrap justify-content-around">
+    <div className="tasks col-md-9 h-100">
+      <div className="d-flex flex-wrap justify-content-around h-50 overflow-scroll bg-danger">
         {
           list.categories.map(category => {
             return (
@@ -157,26 +175,26 @@ export default function Tasks() {
                 </div>
                 <ul className="list-group list-group-flush">
                   {
-                    tasks.map(task => {
-                      return task.id === category.id &&
-                        <ul className="list-group list-group-flush" key={task.id}>
-                          {task.data.map(task => {
+                    tasks.map(el => {
+                      return el.id === category.id &&
+                        <ul className="list-group list-group-flush" key={el.id}>
+                          {el.category.data.map(el => {
                             return (
-                              <li className="list-group-item d-flex" key={task.id}>
+                              <li className="list-group-item d-flex" key={el.id}>
                                 <div className="btn-group-left">
                                     <input type="checkbox" />
                                     <label htmlFor="">-</label>
                                 </div>
                                 <div className="content flex-grow-1 p-2">
-                                  <span>{ task.name }</span>
-                                  <span>{ task.body }</span>
+                                  <span>{ el.name }</span>
+                                  <span>{ el.body }</span>
                                 </div>
                                 <div className="btn-group-right">
                                   <button className="btn btn-info"
-                                  onClick={() => handleEdit(category.id, task.id, task.name, task.body, task.due_date)
+                                  onClick={() => handleEdit(category.id, el.id, el.name, el.body, el.due_date)
                                   }>E</button>
                                   <button className="btn btn-danger"
-                                  onClick={() => handleDelete(category.id, task.id)}
+                                  onClick={() => handleDelete(category.id, el.id)}
                                   >D</button>
                                 </div>
                               </li>
@@ -193,11 +211,14 @@ export default function Tasks() {
             )
           })
         }
+
       </div>
 
       <TaskModal show={showModal} handleClose={handleClose} handleSubmit={handleSubmit} task={task} setTask={setTask} edit={edit}/>
 
       <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={handleDelete} variant="task" />
+
+      <TaskDue tasks={tasks} />
     </div>
   )
 }

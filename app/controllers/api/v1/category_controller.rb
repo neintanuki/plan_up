@@ -54,8 +54,9 @@ module Api
         @body = JSON.parse(request.raw_post)
         @update = CategoryUpdate.new
         @user = User.find(@id)
+        @project = @user.projects.find(@body["project_id"])
 
-        @category = @user.categories.find(@body["category_id"])
+        @category = @project.categories.find(@body["category_id"])
 
         if @category.update(title: @body["title"])
           render json: @update.success
@@ -69,7 +70,8 @@ module Api
         @body = JSON.parse(request.raw_post)
         @destroy = CategoryDestroy.new
         @user = User.find(@id)
-        @category = @user.categories.find(@body["category_id"])
+        @project = @user.projects.find(@body["project_id"])
+        @category = @project.categories.find(@body["category_id"])
 
         @category.destroy
 

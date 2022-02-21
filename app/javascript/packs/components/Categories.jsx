@@ -3,11 +3,16 @@ import React, { useState, useContext } from 'react'
 import CategoryModal from './CategoryModal.jsx'
 import DeleteModal from './DeleteModal.jsx'
 
+import { get_categories } from '../api/read'
 import { create_category } from '../api/create'
 import { edit_category } from '../api/edit'
 import { delete_category } from '../api/delete'
 
 import { ListContext } from '../pages/Dashboard'
+
+import edit_icon from 'images/edit.svg'
+import add from 'images/plus-square.svg'
+import remove from 'images/x-square.svg'
 
 export default function Categories() {
   const [category, setCategory] = useState({
@@ -15,7 +20,7 @@ export default function Categories() {
     title: ""
   })
   const [edit, setEdit] = useState(false)
-  const { list, selectedId } = useContext(ListContext)
+  const { list, selectedId, setList } = useContext(ListContext)
 
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => setShowModal(false)
@@ -32,12 +37,33 @@ export default function Categories() {
   function createCategory() {
     create_category({ project_id: selectedId.project, title: category.title }).then(res => {
       console.log(res)
+      console.log(selectedId.project)
+      get_categories(selectedId.project).then(res => {
+        const { data } = res.data
+        console.log(res)
+        setList(state => {
+          return {
+            ...state,
+            categories: data
+          }
+        })
+      })
     })
   }
 
   function editCategory() {
-    edit_category(category).then(res => {
+    edit_category({...category, project_id: selectedId.project}).then(res => {
       console.log(res)
+      get_categories(selectedId.project).then(res => {
+        const { data } = res.data
+        console.log(res)
+        setList(state => {
+          return {
+            ...state,
+            categories: data
+          }
+        })
+      })
     })
   }
 
@@ -53,8 +79,18 @@ export default function Categories() {
   }
 
   function deleteCategory() {
-    delete_category({ category_id: category.category_id }).then(res => {
+    delete_category({ category_id: category.category_id, project_id: selectedId.project }).then(res => {
       console.log(res)
+      get_categories(selectedId.project).then(res => {
+        const { data } = res.data
+        console.log(res)
+        setList(state => {
+          return {
+            ...state,
+            categories: data
+          }
+        })
+      })
     })
   }
 
@@ -78,11 +114,11 @@ export default function Categories() {
   }
 
   return (
-    <div className="categories mb-2">
+    <div className="categories mb-2 px-4 py-2 line-bottom">
       <div className="header d-flex justify-content-between align-items-center">
         <h1 className="my-2 h5">Categories</h1>        
         <div className="btn-group">
-          <button className="btn btn-success" onClick={() => handleShow(false)}>+</button>
+          <button className="icon" onClick={() => handleShow(false)}><img src={add} alt="add" /></button>
         </div>
       </div>
 
@@ -90,15 +126,15 @@ export default function Categories() {
         {
           list.categories.map(({ id, title }) => {
             return (
-              <div className="category d-flex justify-content-between" key={id}>
+              <div className="category my-1 d-flex justify-content-between" key={id}>
                 <span>{ title }</span>
 
                 <div className="btn-group">
                   <button
-                  className="btn-btn-success"
+                  className="icon"
                   onClick={() => handleEdit(id, title)}
-                  >edit</button>
-                  <button className="btn btn-success" onClick={() => handleDelete(id)}>-</button>
+                  ><img src={edit_icon} alt="edit" /></button>
+                  <button className="icon" onClick={() => handleDelete(id)}><img src={remove} alt="remove" /></button>
                 </div>
               </div>
             )

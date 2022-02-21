@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 
 import { login_user } from '../api/auth'
+import Errors from './Errors.jsx'
 
 export default function Login() {
 
   const [auth, setAuth] = useState({
     username: "",
     password: ""
+  })
+
+  const [errors, setErrors] = useState({
+    username: [],
+    password: []
   })
 
   function change_auth(property, event) {
@@ -18,8 +24,27 @@ export default function Login() {
     })
   }
 
+  function handleLogin(e) {
+    login_user(e, auth).then(res => {
+      console.log(res.data)
+      window.location.href = "/dashboard"
+    }).catch(err => {
+      const { errors } = err.response.data
+      let errorTemplate = {
+        username: [],
+        password: []
+      }
+      errorTemplate = {
+        ...errorTemplate,
+        ...errors
+      }
+
+      setErrors(errorTemplate)
+    })
+  }
+
   return (
-    <form className="login container" onSubmit={e => login_user(e, auth)}>
+    <form className="login container" onSubmit={handleLogin}>
       <div className="header mb-4">
         <h1 className='my-1 text-primary'>Login</h1>
         <p>Adventure awaits</p>
@@ -33,6 +58,7 @@ export default function Login() {
         onChange={e => change_auth("username", e)}
         value={auth.username}
         />
+        <Errors errors={errors.username} />
       </div>
 
       <div className="mb-4">
@@ -43,6 +69,7 @@ export default function Login() {
         onChange={e => change_auth("password", e)}
         value={auth.password}
         />
+        <Errors errors={errors.password} />
       </div>
 
       <div className="footer">

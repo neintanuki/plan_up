@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route path="register" element={<Register />} />
         </Route>
 
-        <Route path='/dashboard/:id' element={<Dashboard />} />
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>,
     document.body.appendChild(document.createElement('div')),

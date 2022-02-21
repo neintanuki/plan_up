@@ -19,10 +19,10 @@ export default function Dashboard() {
 
 	return (
     <ListContext.Provider value={{list, setList, selectedId, setSelectedId}}>
-  		<section className="dashboard vh-100 bg-info">
+  		<section className="dashboard vh-100">
         <Nav />
 
-        <div className="body d-flex h-100 bg-danger">
+        <div className="body d-flex h-100">
           <Sidebar />
           <Tasks />
 

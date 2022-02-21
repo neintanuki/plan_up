@@ -10,6 +10,10 @@ import { delete_project } from '../api/delete'
 
 import { ListContext } from '../pages/Dashboard'
 
+import edit_icon from 'images/edit.svg'
+import add from 'images/plus-square.svg'
+import remove from 'images/x-square.svg'
+
 export default function Projects() {
   const [project, setProject] = useState({
     title: "",
@@ -24,7 +28,7 @@ export default function Projects() {
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => setShowModal(false)
 
-  const { list, setList, setSelectedId } = useContext(ListContext)
+  const { list, setList, selectedId, setSelectedId } = useContext(ListContext)
 
   function handleShow(isEdit) {
     setEdit(isEdit)
@@ -34,6 +38,16 @@ export default function Projects() {
   function createProject() {
     create_project(project).then(res => {
       handleClose()
+      get_projects().then(res => {
+        const { data } = res.data
+        console.log(res)
+        setList(state => {
+          return {
+            ...state,
+            projects: data
+          }
+        })
+      })
     })
   }
 
@@ -41,12 +55,32 @@ export default function Projects() {
     edit_project(project).then(res => {
       console.log(res)
       handleClose()
+      get_projects().then(res => {
+        const { data } = res.data
+        console.log(res)
+        setList(state => {
+          return {
+            ...state,
+            projects: data
+          }
+        })
+      })
     })
   }
 
   function deleteProject() {
     delete_project({ id: project.id }).then(res => {
       console.log(res)
+      get_projects().then(res => {
+        const { data } = res.data
+        console.log(res)
+        setList(state => {
+          return {
+            ...state,
+            projects: data
+          }
+        })
+      })
     })
   }
 
@@ -79,6 +113,7 @@ export default function Projects() {
   function selectProject(id) {
     get_categories(id).then(res => {
       const { data } = res.data
+      console.log(res)
 
       setList(state => {
         return {
@@ -111,11 +146,11 @@ export default function Projects() {
 
 
   return (
-    <div className="projects mb-2">
+    <div className="projects mb-2 line-bottom px-4 py-2">
       <div className="header d-flex justify-content-between align-items-center">
         <h1 className="my-2 h5">Projects</h1>        
         <div className="btn-group">
-          <button className="btn btn-success" onClick={() => handleShow(false)}>+</button>
+          <button className="icon" onClick={() => handleShow(false)}><img src={add} alt="add" /></button>
         </div>
       </div>
 
@@ -130,9 +165,9 @@ export default function Projects() {
 
                 <div className="btn-group">
                   <button
-                  className="btn-btn-success"
-                  onClick={() => handleEdit(project.id, project.title, project.description)}>edit</button>
-                  <button className="btn btn-success" onClick={() => handleDelete(project.id)}>-</button>
+                  className="icon"
+                  onClick={() => handleEdit(project.id, project.title, project.description)}><img src={edit_icon} alt="edit" /></button>
+                  <button className="icon" onClick={() => handleDelete(project.id)}><img src={remove} alt="remove" /></button>
                 </div>
               </div>
             )
