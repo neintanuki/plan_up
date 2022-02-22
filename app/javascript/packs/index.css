@@ -29,6 +29,7 @@
   width: 2px;
 }
 
-.left-section {
+.left-section, .home {
   background: url('~images/kale-salad.jpg') repeat;
 }
+
