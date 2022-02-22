@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 
 export default function TaskDue({ tasks }) {
   const [dueTasks, setDueTasks] = useState([])
@@ -40,7 +40,7 @@ export default function TaskDue({ tasks }) {
           day: taskDate.getDate()
         }
 
-        return currentDate.year >= dueDate.year && currentDate.month >= dueDate.month && currentDate.day >= dueDate.day
+        return currentDate.year >= dueDate.year && currentDate.month >= dueDate.month && currentDate.day >= dueDate.day && !item.is_completed
       })
 
       newDueTasks = newDueTasks.concat(arr)
@@ -70,9 +70,15 @@ export default function TaskDue({ tasks }) {
                   </div>
                 </li>
               )
-            })
+            })                
           }
         </ul>
+        {
+          dueTasks.length <= 0 &&
+            <div className="empty text-center flex-grow-1">
+              No tasks due
+            </div>  
+        }
       </div>
 
     </div>

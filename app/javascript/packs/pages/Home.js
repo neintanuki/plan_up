@@ -4,8 +4,14 @@ import { Link } from 'react-router-dom'
 export default function Home() {
   return (
     <div className="home">
-      <h1 className=''>This is your homepage</h1>
-      <Link to='/user/login'>Login</Link>
+      <h1>Welcome to PlanUp</h1>
+      <p>Manage projects, catgories, and tasks using PlanUp. Sign up now</p>
+
+      <div className="btn-group">
+        <a href="">Sign Up</a>
+        <span>or</span>
+        <a href="">Log In</a>
+      </div>
     </div>
   )
 }

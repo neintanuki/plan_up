@@ -227,6 +227,13 @@ export default function Projects() {
 
       <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={deleteProject} variant="project" />
 
+      {
+        list.projects.length <= 0 &&
+        <div className="empty text-center">
+          No projects found
+        </div>
+      }
+
     </div>
   )
 }

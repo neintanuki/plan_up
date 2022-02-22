@@ -164,6 +164,13 @@ export default function Categories() {
       <CategoryModal show={showModal} handleClose={handleClose} handleSubmit={handleSubmit} category={category} setCategory={setCategory} edit={edit} errors={errors}/>
 
       <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={deleteCategory} variant="category" />
+
+      {
+        list.categories.length <= 0 &&
+        <div className="empty text-center">
+          No categories found
+        </div>
+      }
       
     </div>
   )

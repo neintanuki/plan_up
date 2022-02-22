@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { ListContext } from '../pages/Dashboard'
 import { GlobalContext } from './Global.jsx'
 
 import { logout } from '../api/auth'
 
+import log_out_icon from 'images/log-out.svg'
+
 export default function Nav() {
-  const { list } = useContext(ListContext)
   const { userUsername, setUserUsername } = useContext(GlobalContext)
   let navigate = useNavigate()
 
@@ -26,23 +26,10 @@ export default function Nav() {
           <span>Plan Up</span>
         </div>
 
-        <nav className="navbar-nav flex flex-row">
-          {
-            list.projects.map(project => {
-              return (
-                <div className="project-item nav-item mx-4" key={project.id}>
-                  { project.title }
-                </div>
-              )
-            })
-
-          }        
-        </nav>
-
-        <div className="navbar-profile">
+        <div className="navbar-profile d-flex align-items-center">
           <span>Hi, { userUsername }</span>
-          <span className="line"></span>
-          <span onClick={handleLogout}><img src="" alt="logout" /></span>
+          <span className="line mx-2"></span>
+          <span onClick={handleLogout}><img src={log_out_icon} alt="logout" /></span>
         </div>        
       </div>
 

@@ -22,3 +22,13 @@
 .selected-project {
   background: #f5f5f5;
 }
+
+.line {
+  background: black;
+  height: 14px;
+  width: 2px;
+}
+
+.left-section {
+  background: url('~images/kale-salad.jpg') repeat;
+}
