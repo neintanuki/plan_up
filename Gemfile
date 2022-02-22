@@ -24,7 +24,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cors'
 gem 'jwt', '~> 2.2'
 gem 'dotenv-rails', groups: [:development, :test]
-gem 'net-smtp'
+gem 'net-smtp', require: false
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
