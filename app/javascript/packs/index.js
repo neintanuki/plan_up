@@ -18,24 +18,28 @@ import Dashboard from './pages/Dashboard'
 // components
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx'
+import Global from './components/Global.jsx'
+import PrivateRoute from './components/PrivateRoute.jsx'
 
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-        </Route>
+    <Global>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
+          </Route>
 
-        <Route path="/user" element={<User />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-        </Route>
+          <Route path="/user" element={<User />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
 
-        <Route path='/dashboard' element={<Dashboard />} />
-      </Routes>
-    </BrowserRouter>,
+          <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        </Routes>
+      </BrowserRouter>
+    </Global>,
     document.body.appendChild(document.createElement('div')),
   )
 })

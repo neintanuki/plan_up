@@ -18,6 +18,7 @@ module Api
           
           if ency_pass == @body["password"]
             send_auth_cookie(encode_token(@user.id))
+            @login.username = @user.username
             render json: @login.success    
           else
             # password did not match
@@ -65,6 +66,28 @@ module Api
 
       end
 
+      def status
+        @id = decode_token.first["user_id"]
+        @user = User.find(@id)
+
+        if @user
+          render json: {
+            message: "User found"
+          }
+        else
+          render json: {
+            message: "User not found"
+          }, status: :unauthorized
+        end
+      end
+
+      def logout
+        send_auth_cookie('', '/', Time.now())
+        render json: {
+          message: "Logout User"
+        }
+      end
+
       private
       include Register
       include Login
@@ -78,12 +101,23 @@ module Api
         return JWT.encode(payload, secret_key, algorithm = 'HS256')
       end
 
-      def send_auth_cookie(token, path = "/")
+      def decode_token
+        token = request.cookies["jwt_auth"]
+
+        if token
+          JWT.decode(token, ENV['API_SALT'])
+        else
+          nil
+        end
+
+      end
+
+      def send_auth_cookie(token, path = "/", expires = (Time.now() + 60 * 60 * 24 * 3))
         response.set_cookie(
           :jwt_auth,
           {
             path: path,
-            expiry: 60 * 60 * 24 * 1000, # 3 days before expiration
+            expires: expires, # 3 days before expiration
             value: token,
             httponly: true
           }

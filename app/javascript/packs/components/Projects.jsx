@@ -146,8 +146,8 @@ export default function Projects() {
 
 
   return (
-    <div className="projects mb-2 line-bottom px-4 py-2">
-      <div className="header d-flex justify-content-between align-items-center">
+    <div className="projects mb-2 line-bottom py-2">
+      <div className="header d-flex justify-content-between align-items-center px-4">
         <h1 className="my-2 h5">Projects</h1>        
         <div className="btn-group">
           <button className="icon" onClick={() => handleShow(false)}><img src={add} alt="add" /></button>
@@ -158,10 +158,18 @@ export default function Projects() {
         {
           list.projects.map(project => {
             return (
-              <div className="project-item my-1 d-flex justify-content-between" key={project.id} onClick={() => selectProject(project.id)}>
-                <span>
-                  { project.title }
-                </span>
+              <div
+              className={`${selectedId.project == project.id ? "selected-project " : ""}project-item my-1 d-flex justify-content-between align-items-baseline px-4`}
+              key={project.id}
+              onClick={() => selectProject(project.id)}>
+                <div className="text-content">
+                  <p className="my-1">
+                    { project.title }
+                  </p>
+                  <p className="fw-light my-1">
+                    { project.description }
+                  </p>
+                </div>
 
                 <div className="btn-group">
                   <button

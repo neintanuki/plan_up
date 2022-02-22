@@ -1,7 +1,9 @@
 module Login
   class Login
+    attr_writer :username
 
     def initialize
+      @username
       @errors = {
         full_messages: []
       }
@@ -24,6 +26,7 @@ module Login
           code: 200,
           message: "Success"
         },
+        username: @username,
         message: "Login Successful"
       }
 

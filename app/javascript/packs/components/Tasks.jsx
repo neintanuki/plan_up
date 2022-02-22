@@ -11,6 +11,9 @@ import TaskModal from './TaskModal.jsx'
 import DeleteModal from './DeleteModal.jsx'
 import TaskDue from './TaskDue.jsx'
 
+import edit_icon from 'images/edit.svg'
+import remove from 'images/x-square.svg'
+
 export default function Tasks() {
   const { selectedId, list, setList } = useContext(ListContext)
 
@@ -159,18 +162,37 @@ export default function Tasks() {
     })
   }
 
+  function parseDate(date) {
+    date = new Date(date)
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ]
+    return `${months[date.getMonth()]} ${date.getDate()} ${date.getFullYear()}`
+  }
+
   useEffect(() => {
     getTasks()
   }, [selectedId.project, list.categories])
 
   return (
     <div className="tasks col-md-9 h-100">
-      <div className="d-flex flex-wrap justify-content-around h-50 overflow-scroll bg-danger">
+      <div className="d-flex flex-wrap justify-content-around h-50 overflow-scroll">
         {
           list.categories.map(category => {
             return (
-              <div className="category card my-3" key={category.id}>
-                <div className="card-header">
+              <div className="category card my-3 d-flex flex-column" key={category.id}>
+                <div className="card-header fw-bold text-center">
                   <span>{ category.title }</span>
                 </div>
                 <ul className="list-group list-group-flush">
@@ -180,22 +202,22 @@ export default function Tasks() {
                         <ul className="list-group list-group-flush" key={el.id}>
                           {el.category.data.map(el => {
                             return (
-                              <li className="list-group-item d-flex" key={el.id}>
+                              <li className="list-group-item d-flex align-items-baseline" key={el.id}>
                                 <div className="btn-group-left">
                                     <input type="checkbox" />
-                                    <label htmlFor="">-</label>
                                 </div>
                                 <div className="content flex-grow-1 p-2">
-                                  <span>{ el.name }</span>
-                                  <span>{ el.body }</span>
+                                  <p className="my-1">{ el.name }</p>
+                                  <p className="my-1 fw-light">{ el.body }</p>
+                                  <p className="my-1"><strong>Due on: </strong>{ parseDate(el.due_date) }</p>
                                 </div>
                                 <div className="btn-group-right">
-                                  <button className="btn btn-info"
+                                  <button className="icon"
                                   onClick={() => handleEdit(category.id, el.id, el.name, el.body, el.due_date)
-                                  }>E</button>
-                                  <button className="btn btn-danger"
+                                  }><img src={edit_icon} alt="edit" /></button>
+                                  <button className="icon"
                                   onClick={() => handleDelete(category.id, el.id)}
-                                  >D</button>
+                                  ><img src={remove} alt="remove" /></button>
                                 </div>
                               </li>
                             )
@@ -205,7 +227,7 @@ export default function Tasks() {
                   }
                 </ul>
                 <div className="card-footer">
-                  <button className="btn btn-info" onClick={() => handleShow(category.id)}>Add Task</button>
+                  <button className="btn btn-info w-100" onClick={() => handleShow(category.id)}>Add Task</button>
                 </div>
               </div>
             )

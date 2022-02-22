@@ -16,3 +16,16 @@ export async function register_user(e, payload) {
 
   return res
 }
+
+export async function logout() {
+  const res = await axios.post(`${API_URL}/logout`)
+
+  return res
+}
+
+export async function status() {
+  const res = await axios.post(`${API_URL}/status`)
+
+  return res
+}
+

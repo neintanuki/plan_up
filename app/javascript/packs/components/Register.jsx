@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { register_user } from '../api/auth'
 import Errors from './Errors.jsx'
 
 export default function Register() {
+
+  let navigate = useNavigate()
 
   const [auth, setAuth] = useState({
     username: "",
@@ -29,7 +32,7 @@ export default function Register() {
     register_user(e, auth).then(res => {
       console.log(res)
       alert("Account Created")
-      window.location.href = "/user/login"
+      navigate("/user/login")
     }).catch(err => {
       const { errors } = err.response.data
       let errorTemplate = {

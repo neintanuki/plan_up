@@ -15,6 +15,10 @@
   border: none;
 }
 
-.task-due {
+.task-due, .tasks {
   background: #eeeeee;
+}
+
+.selected-project {
+  background: #f5f5f5;
 }

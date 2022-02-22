@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       # user
       post '/user/login', to: 'auth#login'
       post '/user/register', to: 'auth#register'
+      post '/user/status', to: 'auth#status'
+      post '/user/logout', to: 'auth#logout'
 
       #project
       get '/projects', to: 'project#new'

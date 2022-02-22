@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { login_user } from '../api/auth'
 import Errors from './Errors.jsx'
 
+import { GlobalContext } from './Global.jsx'
+
 export default function Login() {
+  const { setUserUsername, setAuthStatus } = useContext(GlobalContext)
+  let navigate = useNavigate()
 
   const [auth, setAuth] = useState({
     username: "",
@@ -26,8 +31,10 @@ export default function Login() {
 
   function handleLogin(e) {
     login_user(e, auth).then(res => {
-      console.log(res.data)
-      window.location.href = "/dashboard"
+      const { username } = res.data
+      setUserUsername(username)
+      setAuthStatus("fulfilled")
+      navigate("/dashboard")
     }).catch(err => {
       const { errors } = err.response.data
       let errorTemplate = {
