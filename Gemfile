@@ -26,6 +26,7 @@ gem 'jwt', '~> 2.2'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'net-smtp', require: false
 gem 'net-pop', require: false
+gem 'net-imap', require: false
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
