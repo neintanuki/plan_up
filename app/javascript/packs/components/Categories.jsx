@@ -22,8 +22,9 @@ export default function Categories() {
   const [edit, setEdit] = useState(false)
   const { list, selectedId, setList } = useContext(ListContext)
 
+  const [errors, setErrors] = useState([])
+
   const [showModal, setShowModal] = useState(false)
-  const handleClose = () => setShowModal(false)
 
   const [deleteModal, setDeleteModal] = useState(false)
   const closeDeleteModal = () => setDeleteModal(false)
@@ -34,13 +35,22 @@ export default function Categories() {
     setShowModal(true)
   }
 
+  function handleClose() {
+    setShowModal(false)
+    setCategory({
+      category_id: "",
+      title: ""
+    })
+    setErrors([])
+  }
+
   function createCategory() {
     create_category({ project_id: selectedId.project, title: category.title }).then(res => {
       console.log(res)
       console.log(selectedId.project)
       get_categories(selectedId.project).then(res => {
         const { data } = res.data
-        console.log(res)
+        handleClose()
         setList(state => {
           return {
             ...state,
@@ -48,7 +58,11 @@ export default function Categories() {
           }
         })
       })
-    })
+    }).catch(err => {
+        const { title } = err.response.data.errors
+
+        setErrors(title)
+      })
   }
 
   function editCategory() {
@@ -57,6 +71,7 @@ export default function Categories() {
       get_categories(selectedId.project).then(res => {
         const { data } = res.data
         console.log(res)
+        handleClose()
         setList(state => {
           return {
             ...state,
@@ -64,7 +79,11 @@ export default function Categories() {
           }
         })
       })
-    })
+    }).catch(err => {
+        const { title } = err.response.data.errors
+
+        setErrors(title)
+      })
   }
 
   function handleEdit(id, title) {
@@ -142,9 +161,9 @@ export default function Categories() {
         }
       </div>
 
-      <CategoryModal show={showModal} handleClose={handleClose} handleSubmit={handleSubmit} category={category} setCategory={setCategory} edit={edit}/>
+      <CategoryModal show={showModal} handleClose={handleClose} handleSubmit={handleSubmit} category={category} setCategory={setCategory} edit={edit} errors={errors}/>
 
-      <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={deleteCategory} variant="Category" />
+      <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={deleteCategory} variant="category" />
       
     </div>
   )

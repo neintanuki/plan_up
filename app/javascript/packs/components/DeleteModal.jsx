@@ -12,7 +12,7 @@ export default function DeleteModal({ show, handleClose, handleSubmit, variant }
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete { variant[0].toUpperCase() }</Modal.Title>
+        <Modal.Title>Delete { variant[0].toUpperCase() + variant.slice(1) }</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

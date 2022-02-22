@@ -66,7 +66,7 @@ module Api
         if @task.update(
           name: @body["name"],
           body: @body["body"],
-          is_completed: false,
+          is_completed: @body["is_completed"],
           due_date: @due_date
         )
           render json: @update.success

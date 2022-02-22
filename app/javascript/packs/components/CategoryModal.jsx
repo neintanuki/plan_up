@@ -2,7 +2,9 @@ import React from 'react'
 
 import { Modal, Button } from 'react-bootstrap'
 
-export default function CategoryModal({ show, handleClose, handleSubmit, category, setCategory, edit }) {
+import Errors from './Errors.jsx'
+
+export default function CategoryModal({ show, handleClose, handleSubmit, category, setCategory, edit, errors }) {
 
   function handleCancel() {
     setCategory(state => {
@@ -25,7 +27,6 @@ export default function CategoryModal({ show, handleClose, handleSubmit, categor
 
   function submit() {
     handleSubmit()
-    handleClose()
   }
 
   return (
@@ -38,6 +39,7 @@ export default function CategoryModal({ show, handleClose, handleSubmit, categor
         <div className="mb-4">
           <label className="form-label">Title</label>
           <input type="text" className="form-control" placeholder="Required" onChange={handleTitle} value={category.title} />
+          <Errors errors={errors} />
         </div>
 
       </Modal.Body>

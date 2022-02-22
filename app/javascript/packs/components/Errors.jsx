@@ -4,7 +4,7 @@ import React from 'react'
 export default function Errors({ errors }) {
   return (
     errors.length > 0 &&
-    <div className="errors alert alert-danger mt-2">
+    <div className="errors form-text mt-2">
       {
         errors.map((err, index) => {
           return (

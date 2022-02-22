@@ -4,7 +4,9 @@ import { Modal, Button } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import date_css from 'react-datepicker/dist/react-datepicker.css'
 
-export default function CategoryModal({ show, handleClose, handleSubmit, task, setTask, edit }) {
+import Errors from './Errors.jsx'
+
+export default function TaskModal({ show, handleClose, handleSubmit, task, setTask, edit, errors }) {
 
   const [startDate, setStartDate] = useState(new Date())
 
@@ -56,18 +58,20 @@ export default function CategoryModal({ show, handleClose, handleSubmit, task, s
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title> Task</Modal.Title>
+        <Modal.Title>{ edit ? "Edit" : "Create" } Task</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <div className="mb-4">
           <label className="form-label">Name</label>
           <input type="text" className="form-control" placeholder="Required" onChange={handleName} value={task.name}/>
+          <Errors errors={errors.name} />
         </div>
 
         <div className="mb-4">
           <label className="form-label">Body</label>
           <textarea type="text" className="form-control" placeholder="Optional" onChange={handleBody} value={task.body}></textarea>
+          <Errors errors={errors.body} />
         </div>
 
         <div className="mb-4">
@@ -81,7 +85,7 @@ export default function CategoryModal({ show, handleClose, handleSubmit, task, s
           Cancel
         </Button>
         <Button variant="primary" onClick={submit}>
-          Task
+          { edit ? "Edit" : "Create" } Task
         </Button>
       </Modal.Footer>
     </Modal>

@@ -21,18 +21,38 @@ export default function Tasks() {
     id: "",
     name: "",
     body: "",
+    is_completed: false,
     dueDate: "",
     task_id: ""
   })
   const [tasks, setTasks] = useState([])
   const [edit, setEdit] = useState(false)
 
+  const [errors, setErrors] = useState({
+    name: [],
+    body: []
+  })
+
   const [deleteModal, setDeleteModal] = useState(false)
   const closeDeleteModal = () => setDeleteModal(false)
   const showDeleteModal = () => setDeleteModal(true)
 
   const [showModal, setShowModal] = useState(false)
-  const handleClose = () => setShowModal(false)
+
+  function handleClose() {
+    setShowModal(false)
+    setErrors({
+      name: [],
+      body: []
+    })
+    setTask({
+      id: "",
+      name: "",
+      body: "",
+      dueDate: "",
+      task_id: ""
+    })
+  }
   
   function handleShow(id) {
     setTask(state => {
@@ -56,17 +76,17 @@ export default function Tasks() {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
         day: date.getDate()
-      }
+      },
+      is_completed: task.is_completed
     }
 
     console.log(payload)
 
     create_task(payload).then(res => {
-      handleClose()
       console.log(res)
       get_categories(selectedId.project).then(res => {
         const { data } = res.data
-        console.log(res)
+        handleClose()
         setList(state => {
           return {
             ...state,
@@ -74,7 +94,18 @@ export default function Tasks() {
           }
         })
       })
-    })
+    }).catch(err => {
+        const { errors } = err.response.data
+        let newErrors = {
+          namee: [],
+          body: []
+        }
+        newErrors = {
+          ...newErrors,
+          ...errors
+        }
+        setErrors(newErrors)
+      })
   }
 
   function editTask() {
@@ -89,17 +120,29 @@ export default function Tasks() {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
         day: date.getDate()
-      }
+      },
+      is_completed: task.is_completed
     }
 
 
     edit_task(payload).then(res => {
       handleClose()
       getTasks()
-    })
+    }).catch(err => {
+        const { errors } = err.response.data
+        let newErrors = {
+          namee: [],
+          body: []
+        }
+        newErrors = {
+          ...newErrors,
+          ...errors
+        }
+        setErrors(newErrors)
+      })
   }
 
-  function handleEdit(id, task_id, name, body, dueDate) {
+  function handleEdit(id, task_id, name, body, dueDate, is_completed = false) {
     setTask(state => {
       return {
         ...state,
@@ -107,11 +150,34 @@ export default function Tasks() {
         task_id,
         name,
         body,
-        dueDate
+        dueDate,
+        is_completed
       }
     })
     setEdit(true)
     setShowModal(true)
+  }
+
+  function markComplete(id, task_id, name, body, dueDate, is_completed = false) {
+    const date = new Date(dueDate)
+    const payload = {
+      project_id: selectedId.project,
+      category_id: id,
+      id: task_id,
+      name,
+      body,
+      due_date: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      },
+      is_completed
+    }
+
+    edit_task(payload).then(res => {
+      console.log(res)
+      getTasks()
+    })
   }
 
   function handleSubmit() {
@@ -204,7 +270,10 @@ export default function Tasks() {
                             return (
                               <li className="list-group-item d-flex align-items-baseline" key={el.id}>
                                 <div className="btn-group-left">
-                                    <input type="checkbox" />
+                                    <input type="checkbox"
+                                    onChange={() => markComplete(category.id, el.id, el.name, el.body, el.due_date, !el.is_completed)}
+                                    checked={el.is_completed}
+                                    />
                                 </div>
                                 <div className="content flex-grow-1 p-2">
                                   <p className="my-1">{ el.name }</p>
@@ -226,7 +295,7 @@ export default function Tasks() {
                     })
                   }
                 </ul>
-                <div className="card-footer">
+                <div className="card-footer p-relative bottom-0">
                   <button className="btn btn-info w-100" onClick={() => handleShow(category.id)}>Add Task</button>
                 </div>
               </div>
@@ -236,7 +305,7 @@ export default function Tasks() {
 
       </div>
 
-      <TaskModal show={showModal} handleClose={handleClose} handleSubmit={handleSubmit} task={task} setTask={setTask} edit={edit}/>
+      <TaskModal show={showModal} handleClose={handleClose} handleSubmit={handleSubmit} task={task} setTask={setTask} edit={edit} errors={errors}/>
 
       <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={handleDelete} variant="task" />
 

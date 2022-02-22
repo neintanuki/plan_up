@@ -25,10 +25,27 @@ export default function Projects() {
   const closeDeleteModal = () => setDeleteModal(false)
   const showDeleteModal = () => setDeleteModal(true)
 
+  const [errors, setErrors] = useState({
+    title: [],
+    description: []
+  })
+
   const [showModal, setShowModal] = useState(false)
-  const handleClose = () => setShowModal(false)
 
   const { list, setList, selectedId, setSelectedId } = useContext(ListContext)
+
+  function handleClose() {
+    setShowModal(false)
+    setErrors({
+      title: [],
+      description: []
+    })
+    setProject({
+      title: "",
+      description: "",
+      id: ""
+    })
+  }
 
   function handleShow(isEdit) {
     setEdit(isEdit)
@@ -48,6 +65,17 @@ export default function Projects() {
           }
         })
       })
+    }).catch(err => {
+      const { errors } = err.response.data
+      let newErrors = {
+        title: [],
+        description: []
+      }
+      newErrors = {
+        ...newErrors,
+        ...errors
+      }
+      setErrors(newErrors)
     })
   }
 
@@ -65,7 +93,19 @@ export default function Projects() {
           }
         })
       })
-    })
+    }).catch(err => {
+        const { errors } = err.response.data
+        let newErrors = {
+          title: [],
+          description: []
+        }
+        newErrors = {
+          ...newErrors,
+          ...errors
+        }
+        setErrors(newErrors)
+      })
+
   }
 
   function deleteProject() {
@@ -183,9 +223,9 @@ export default function Projects() {
         }
       </div>
       
-      <ProjectModal show={showModal} handleClose={handleClose} project={project} setProject={setProject} handleSubmit={handleSubmit} onEdit={edit} />
+      <ProjectModal show={showModal} handleClose={handleClose} project={project} setProject={setProject} handleSubmit={handleSubmit} onEdit={edit} errors={errors}/>
 
-      <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={deleteProject} variant="Project" />
+      <DeleteModal show={deleteModal} handleClose={closeDeleteModal} handleSubmit={deleteProject} variant="project" />
 
     </div>
   )
